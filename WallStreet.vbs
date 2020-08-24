@@ -20,8 +20,8 @@ Sub GetTicker()
         Cells(1, 10).Value = "Yearly Change"
         Cells(1, 11).Value = "Percent Change"
         Cells(1, 12).Value = "Total Stock Volume"
-        Cells(1, 13).Value = "Year Begin Value"
-        Cells(1, 14).Value = "Year Close Value"
+        'Cells(1, 13).Value = "Year Begin Value"
+        'Cells(1, 14).Value = "Year Close Value"
         
 
         '  Go through each row to collect data
@@ -67,6 +67,9 @@ Sub GetTicker()
             End If
         
         Next r
+        
+        ' Auto Fit Result columns
+        Columns("I:L").AutoFit
 
 End Sub
 
