@@ -51,8 +51,18 @@ Sub GetTicker()
                 Cells(Data_r, 11).Value = PercentChange
                 Cells(Data_r, 11).Style = "Percent"
                 Cells(Data_r, 12).Value = TotalStock
-                Cells(Data_r, 13).Value = YearOpen
-                Cells(Data_r, 14).Value = YearClose
+                'Cells(Data_r, 13).Value = YearOpen
+                'Cells(Data_r, 14).Value = YearClose
+                
+                ' Color cells for Yearly Change
+                If (YearlyChange < 0) Then
+                    Cells(Data_r, 10).Interior.ColorIndex = 3
+                ElseIf (YearlyChange > 0) Then
+                    Cells(Data_r, 10).Interior.ColorIndex = 4
+                End If
+                
+                
+                ' Set to next row forext ticker
                 Data_r = Data_r + 1
             End If
         
