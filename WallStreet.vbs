@@ -17,11 +17,11 @@ Sub GetTicker()
         
         ' Print headers for data collected
         Cells(1, 9).Value = "Ticker"
-        'Cells(1, 10).Value = "Yearly Change"
-        'Cells(1, 11).Value = "Percent Change"
-        Cells(1, 10).Value = "Year Begin Value"
-        Cells(1, 11).Value = "Year Close Value"
+        Cells(1, 10).Value = "Yearly Change"
+        Cells(1, 11).Value = "Percent Change"
         Cells(1, 12).Value = "Total Stock Volume"
+        Cells(1, 13).Value = "Year Begin Value"
+        Cells(1, 14).Value = "Year Close Value"
         
 
         '  Go through each row to collect data
@@ -38,14 +38,21 @@ Sub GetTicker()
             If (Cells(r, 1).Value <> Cells(r + 1, 1).Value) Then
                 NewTicker = True
                 YearClose = Cells(r, 6).Value
+                ' Calculate Yearly Change
+                YearlyChange = YearClose - YearOpen
+                ' Calculate Percent Change
+                PercentChange = YearClose / YearOpen - 1
             End If
             
             ' Print data
             If (NewTicker = True) Then
                 Cells(Data_r, 9).Value = TickerSymbol
-                Cells(Data_r, 10).Value = YearOpen
-                Cells(Data_r, 11).Value = YearClose
+                Cells(Data_r, 10).Value = YearlyChange
+                Cells(Data_r, 11).Value = PercentChange
+                Cells(Data_r, 11).Style = "Percent"
                 Cells(Data_r, 12).Value = TotalStock
+                Cells(Data_r, 13).Value = YearOpen
+                Cells(Data_r, 14).Value = YearClose
                 Data_r = Data_r + 1
             End If
         
