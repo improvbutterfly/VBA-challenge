@@ -49,7 +49,8 @@ Sub GetTicker()
                 Cells(Data_r, 9).Value = TickerSymbol
                 Cells(Data_r, 10).Value = YearlyChange
                 Cells(Data_r, 11).Value = PercentChange
-                Cells(Data_r, 11).Style = "Percent"
+                Cells(Data_r, 11).NumberFormat = "0.00%" ' Make percentage have two decimal places
+                'Cells(Data_r, 11).Style = "Percent"
                 Cells(Data_r, 12).Value = TotalStock
                 'Cells(Data_r, 13).Value = YearOpen
                 'Cells(Data_r, 14).Value = YearClose
