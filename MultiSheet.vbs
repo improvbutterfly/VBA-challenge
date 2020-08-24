@@ -1,5 +1,5 @@
 Sub EachWSData()
-    
+    ' Declare variables needed for finding yearly change, percent change, and total stock volume
     Dim TickerSymbol As String
     Dim YearOpen As Double
     Dim YearClose As Double
@@ -8,6 +8,17 @@ Sub EachWSData()
     Dim TotalStock As Double
     Dim NewTicker As Boolean
     Dim Data_r As Integer  ' Which row to print data to
+    
+    ' Declare variables needed for finding greatest % increase, greatest % decrease, and greatest total volume
+    Dim GreatestPercentIncrease As Double
+    Dim GreatestPercentDecrease As Double
+    Dim GreatestTotalVolume As Double
+    Dim IncreaseTicker As String
+    Dim DecreaseTicker As String
+    Dim VolumeTicker As String
+    Dim Ticker As String
+    Dim TotalVolume As Double
+    
     
     For Each ws In Worksheets
         ' Declare opening variables for program to function
@@ -72,8 +83,67 @@ Sub EachWSData()
         
         ' Auto Fit Result columns
         ws.Columns("I:L").AutoFit
+        
+        ' Move onto extra challenge to find the greatest % increase, greatest % decrease, and greatest total volume
+        
+        ' Print headers
+        ws.Cells(2, 15).Value = "Greatest % Increase"
+        ws.Cells(3, 15).Value = "Greatest % Decrease"
+        ws.Cells(4, 15).Value = "Greatest Total Volume"
+        ws.Cells(1, 16).Value = "Ticker"
+        ws.Cells(1, 17).Value = "Value"
+    
+        ' Get the number of rows of the different tickers
+        lastTicker = ws.Cells(Rows.Count, 9).End(xlUp).Row
+    
+        ' For each ticker value
+        For ticker_r = 2 To lastTicker
+            Ticker = ws.Cells(ticker_r, 9).Value
+            YearlyChange = ws.Cells(ticker_r, 10).Value
+            PercentChange = ws.Cells(ticker_r, 11).Value
+            TotalVolume = ws.Cells(ticker_r, 12).Value
+        
+            ' Compare total volume to greatest volume
+            If (TotalVolume > GreatestTotalVolume) Then
+                GreatestTotalVolume = TotalVolume
+                VolumeTicker = Ticker
+            End If
+        
+            ' Compare percent increase to greatest increase
+            If (PercentChange > GreatestPercentIncrease) Then
+                GreatestPercentIncrease = PercentChange
+                IncreaseTicker = Ticker
+            ' Compae percent decrease to greatest decrease
+            ElseIf (PercentChange < GreatestPercentDecrease) Then
+                GreatestPercentDecrease = PercentChange
+                DecreaseTicker = Ticker
+            End If
+        Next ticker_r
+    
+        ' Display data for greatest percent increase
+        ws.Cells(2, 16).Value = IncreaseTicker
+        ws.Cells(2, 17).Value = GreatestPercentIncrease
+        ws.Cells(2, 17).NumberFormat = "0.00%" ' Make percentage have two decimal places
+    
+        ' Display data for greatest percent decrease
+        ws.Cells(3, 16).Value = DecreaseTicker
+        ws.Cells(3, 17).Value = GreatestPercentDecrease
+        ws.Cells(3, 17).NumberFormat = "0.00%" ' Make percentage have two decimal places
+    
+        ' Display data for greatest total volume
+        ws.Cells(4, 16).Value = VolumeTicker
+        ws.Cells(4, 17).Value = GreatestTotalVolume
+        
+        ' Reset values for next worksheet
+        GreatestPercentDecrease = 0
+        GreatestPercentIncrease = 0
+        GreatestTotalVolume = 0
+
+    
+        ' Auto fit columns
+        ws.Columns("O:Q").AutoFit
+    
 
     Next ws
 
 End Sub
-
